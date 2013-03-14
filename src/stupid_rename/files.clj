@@ -1,6 +1,7 @@
 (ns stupid-rename.files
   (use [me.raynes.fs :only (file? directory?
                             base-name parent absolute-path
+                            rename
                             list-dir )])
   (require [clojure.string :as sfn]) )
 
@@ -13,12 +14,14 @@
 (defn forFiles
   "I will do something for every file provided."
   [files function]
-  (doseq [file files]
-    (if (file? file)
-      (function file)
-      (if (directory? file)
-        (doseq [child_file (list-dir file)]
-          (function (absolute-path child_file)) )))))
+  (doseq [filename files]
+    (let [file (absolute-path filename)]
+      (if (file? file)
+        (function file)
+        (if (directory? file)
+          (doseq [child_filename (list-dir file)]
+            (let [child_file (absolute-path (str file "/" child_filename))]
+              (function (absolute-path child_file)) )))))))
 
 (defn printConversion
   "I will print the old filename alongside the new one..."
@@ -28,6 +31,13 @@
     (println old_f
              "-->"
              new_f )))
+
+(defn performConversion
+  "I will rename a given file by shortening the filename."
+  [filename]
+  (rename 
+    filename
+    (shorten filename) ))
 
 (defn shorten
   "I try to short a given filename."

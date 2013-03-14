@@ -18,5 +18,5 @@
         files (:clojopts/more opts)]
     (forFiles files (if (contains? opts :dryrun)
               printConversion
-              (fn [f] (println "not implemented...")) ))))
+              performConversion ))))
 
