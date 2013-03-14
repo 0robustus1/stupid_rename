@@ -16,7 +16,7 @@
                 argv
                 (no-arg dryrun n "Do not perform actions -- dry run") )
         files (:clojopts/more opts)]
-    (if (contains? opts :dryrun)
-      (forFiles files printConversion)
-      (forFiles files (fn [f] (println "not implemented..."))) )))
+    (forFiles files (if (contains? opts :dryrun)
+              printConversion
+              (fn [f] (println "not implemented...")) ))))
 
