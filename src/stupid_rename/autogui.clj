@@ -24,8 +24,12 @@
                :items[
                       (scrollable (listbox :id :zipFiles
                                            :model (listZipFiles) ))
-                      (button :id :perform 
-                              :text "unzip and rename!" )])))
+                      (horizontal-panel
+                        :items [
+                          (button :id :perform 
+                                  :text "unzip and rename!" )
+                          (button :id :rezip
+                                  :text "rezip renamed!" )])])))
 
 (defn setupListeners
   "I will listen to events."
