@@ -36,7 +36,12 @@
   [root]
   (invoke-later
     (listen (select root [:#perform])
-      :action-performed (fn [e] (println "button clicked!")) )))
+      :action-performed (fn [e] 
+                          (let [list_widget (select root [:#zipFiles])]
+                            (if-let [zip_files (selection list_widget {:multi? true})]
+                              (doseq [zip_file zip_files]
+                                (unzipAndRename zip_file))
+                              (println "none selected.") ))))))
 
 (defn triggerShow
   "I will make everything visible"
