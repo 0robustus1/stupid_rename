@@ -39,6 +39,12 @@
     filename
     (shorten filename) ))
 
+(defn performConversionForFolder
+  "I will perform the conversion on
+  each file in the folder (first-level)"
+  [folderpath]
+  (forFiles [folderpath] performConversion) )
+
 (defn shorten
   "I try to short a given filename."
   [filename]

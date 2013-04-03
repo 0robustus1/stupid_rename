@@ -1,6 +1,8 @@
 (ns stupid-rename.autogui
   (use seesaw.core)
+  (use seesaw.chooser)
   (use stupid-rename.zip)
+  (use stupid-rename.files)
   (:gen-class) )
 
 (declare setupMainFrame
@@ -28,8 +30,8 @@
                         :items [
                           (button :id :perform 
                                   :text "unzip and rename!" )
-                          (button :id :rezip
-                                  :text "rezip renamed!" )])])))
+                          (button :id :unzip_to
+                                  :text "unzip and rename to!" )])])))
 
 (defn setupListeners
   "I will listen to events."
@@ -38,10 +40,21 @@
     (listen (select root [:#perform])
       :action-performed (fn [e] 
                           (let [list_widget (select root [:#zipFiles])]
-                            (if-let [zip_files (selection list_widget {:multi? true})]
+                            (if-let [zip_files (selection list_widget
+                                                          {:multi? true} )]
                               (doseq [zip_file zip_files]
-                                (unzipAndRename zip_file))
-                              (println "none selected.") ))))))
+                                (unzipAndRename zip_file) )
+                              (println "none selected.") ))))
+    (listen (select root [:#unzip_to])
+      :action-performed (fn [e]
+        (let [list_widget (select root [:#zipFiles])]
+          (if-let [zip_files (selection list_widget {:multi? true})]
+            (let [folderpath (me.raynes.fs/parent
+                               (choose-file :type :save
+                                            :selection-mode :dirs-only ))]
+              (doseq [zip_file zip_files]
+                (unzipAndRenameTo zip_file folderpath) )
+              (performConversionForFolder folderpath) )))))))
 
 (defn triggerShow
   "I will make everything visible"
