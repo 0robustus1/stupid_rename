@@ -43,7 +43,8 @@
                             (if-let [zip_files (selection list_widget
                                                           {:multi? true} )]
                               (doseq [zip_file zip_files]
-                                (unzipAndRename zip_file) )
+                                (unzipAndRename zip_file)
+                                (performConversionForFolder downloadsDir) )
                               (println "none selected.") ))))
     (listen (select root [:#unzip_to])
       :action-performed (fn [e]
