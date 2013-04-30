@@ -50,9 +50,8 @@
       :action-performed (fn [e]
         (let [list_widget (select root [:#zipFiles])]
           (if-let [zip_files (selection list_widget {:multi? true})]
-            (let [folderpath (me.raynes.fs/parent
-                               (choose-file :type :save
-                                            :selection-mode :dirs-only ))]
+            (let [folderpath (choose-file :type :save
+                                            :selection-mode :dirs-only )]
               (doseq [zip_file zip_files]
                 (unzipAndRenameTo zip_file folderpath) )
               (performConversionForFolder folderpath) )))))))
