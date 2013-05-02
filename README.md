@@ -12,13 +12,22 @@ Just download the jar-file.
 
 ## Usage
 
-    $ java -jar stupid_rename-0.1.0-standalone.jar [files] [directories]
+    $ java -jar stupid_rename-0.1.2-standalone.jar [files] [directories]
 
 or
 
     $ stupid_rename [files] [directories]
 
-## Options
+### GUI-Mode
+
+If run without any options, *stupid_rename* will start in
+GUI-Mode. This will supply a swing-based GUI (by using seesaw)
+which will open a window displaying all zip archives in
+`~/Downloads` and allowing you to either unzip
+the renamed files to the `~/Downloads` directory
+or to supply your own directoy to unzip to.
+
+### Options
 
 - `-n` or `--dryrun`
   performs all actions in dryrun-mode which will print
@@ -48,11 +57,8 @@ via the `-n` switch), please contact me.
 
 ### Planned Features
 
-- Currently the program works with files and folders. But it should
-  also be able to work directly on the zip-file. Either by renaming
-  the files and providing a modified *.zip*-file or by unpacking
-  the *.zip*-file and renaming the resulting files. 
 - Drag-And-Drop GUI mode...
+- unzip from commandline...
 
 ## License
 
